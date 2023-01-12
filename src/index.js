@@ -15,7 +15,8 @@ import Reservation from './Component/Resevation';
 import Calculator from './Component/Calulator';
 import ClickExample from './Component/ClickExample';
 import SelectSubmit from './Component/selectSubmit';
-
+import DBconnection from './Component/DBconnection';
+<script src='server.js'></script>
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -238,6 +239,8 @@ root.render(
     <Context />
     <hr />
     <SelectSubmit />
+    <hr />
+    <DBconnection />
   </React.StrictMode>
 );
 }

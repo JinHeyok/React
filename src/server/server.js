@@ -35,3 +35,9 @@ app.post("/" , (req, res) => {
 app.listen(port, () => {
     console.log("example app listening at http://localhost:" + {port});
 });
+
+
+// - Error: ER_NOT_SUPPORTED_AUTH_MODE: Client does not support authentication protocol requested by server; consider upgrading MySQL client 발생시 
+// - 해결 방안 - 
+// - mysql installer > server 옆에 reconfigure > Auth 설정가서 legacy 선택 > 완료 
+

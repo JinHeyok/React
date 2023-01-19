@@ -27,9 +27,9 @@ export class DBconnection extends React.Component{
             body: JSON.stringify(textbox), //json
         })
         
-        .then((res) => res.JSON())
+        .then((res) => res)
         .then((json) => {
-            console.log(json);
+            console.log(json)
             this.setState({
                 userid : json.text//jsontype test로 
             });

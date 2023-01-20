@@ -415,7 +415,7 @@ class NameForm extends React.Component{
     this.state = {
       value : '',
       textAreaValue : '', 
-      selectValue : '',
+      selectValue : '사과',
     };
     
     this.SubmitHandle = this.SubmitHandle.bind(this);
@@ -435,7 +435,9 @@ class NameForm extends React.Component{
   //의미지만 다른 UI엘리먼트에 input의 값을 전달하거나 다른 이벤트 핸들러에서 갑을 재설정 할 수 있다.
 
   SubmitHandle(event){
-    alert("this.state.value = "  + this.state.value);
+    alert("<input type='text'> : "  + this.state.value + '\n' +
+  "<textarea> : " + this.state.textAreaValue +  "\n" +
+   "select> : "  + this.state.selectValue);
     event.preventDefault();
   }
 

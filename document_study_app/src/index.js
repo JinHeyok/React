@@ -414,6 +414,25 @@ function InputText(props){
   )
 }
 
+function TextArea(props){
+  return(
+    <textarea name={props.name} onChange={props.onChange}></textarea>
+  )
+}
+
+function Select(props){
+
+  const list = props.list.map((item) => 
+    <option key={item} value={item}>{item}</option>
+  );
+
+  return(
+    <select name={props.name} onChange={props.onChange}>
+        {list}
+    </select>
+  )
+}
+
 // ------------------------------------------------------------------
 class NameForm extends React.Component{
   constructor(props){
@@ -449,20 +468,16 @@ class NameForm extends React.Component{
 
 
   render(){
+    const testList = ["사과" , "오렌지" , "망고" , "자몽"]
     return(
       <div>
           <form onSubmit={this.SubmitHandle}>
               <label>
-                <input type={"text"} name="value" value={this.state.value} onChange={this.ChangeHandle}></input>
+                <InputText type="text" name="value" onChange={this.ChangeHandle}/>
                 <br />
-                <textarea value={this.state.textAreaValue} name="textAreaValue" onChange={this.ChangeHandle}></textarea>
+                <TextArea name="textAreaValue" onChange={this.ChangeHandle}/>
                 <br />
-                <select value={this.state.selectValue} name="selectValue" onChange={this.ChangeHandle}>
-                    <option value="사과" >사과</option>
-                    <option value="오렌지">오렌지</option>
-                    <option value="딸기">딸기</option>
-                    <option value="자몽">자몽</option>
-                </select>
+                <Select name="selectValue" onChange={this.ChangeHandle} list={testList.map((item) => item)}/>
                 <br/>
                 <InputText type="text" name="testText" onChange={this.ChangeHandle}/>
              </label>

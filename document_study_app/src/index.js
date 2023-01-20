@@ -408,6 +408,12 @@ function NumberList(props){
 const number = [ 1, 2, 3, 4, 5];
 // ------------------------------------------------------------------
 
+function InputText(props){
+  return(
+    <input type={props.type} name={props.name} onChange={props.onChange}></input>
+  )
+}
+
 // ------------------------------------------------------------------
 class NameForm extends React.Component{
   constructor(props){
@@ -416,6 +422,7 @@ class NameForm extends React.Component{
       value : '',
       textAreaValue : '', 
       selectValue : '사과',
+      testText : "",
     };
     
     this.SubmitHandle = this.SubmitHandle.bind(this);
@@ -423,9 +430,7 @@ class NameForm extends React.Component{
   }
 
   ChangeHandle(e){
-
     const name = e.target.name;
-
     this.setState({
       [name] : e.target.value, 
     })
@@ -437,9 +442,11 @@ class NameForm extends React.Component{
   SubmitHandle(event){
     alert("<input type='text'> : "  + this.state.value + '\n' +
   "<textarea> : " + this.state.textAreaValue +  "\n" +
-   "select> : "  + this.state.selectValue);
+   "select> : "  + this.state.selectValue + "\n" + this.state.testText);
     event.preventDefault();
   }
+
+
 
   render(){
     return(
@@ -456,6 +463,8 @@ class NameForm extends React.Component{
                     <option value="딸기">딸기</option>
                     <option value="자몽">자몽</option>
                 </select>
+                <br/>
+                <InputText type="text" name="testText" onChange={this.ChangeHandle}/>
              </label>
               <input type={"submit"} value={"submit"}></input>
           </form>

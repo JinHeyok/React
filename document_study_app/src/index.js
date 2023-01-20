@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { render } from '@testing-library/react';
+import { warning } from '@remix-run/router';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const helloWorld = <h1>Hello World</h1>;
@@ -196,9 +197,275 @@ class Clock extends React.Component{
     )
   }
 }
+// ------------------------------------------------------------------
 
+function Form(){
+  function handelSubmit(e){
+    e.preventDefault();
+    // 이벤트를 정지시키기위해서 명시적으로 작성해줘야한다.
+    console.log("서브밋 정지");
+  }
+
+  return(
+    <form onSubmit={handelSubmit}>
+        <button type='submit'>SubMit</button>
+    </form>
+  )
+  //Submit 발동시 hadleSubmit 핸들러 함수 발동
+
+}
+// ------------------------------------------------------------------
 
 // ------------------------------------------------------------------
+
+class Togle extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = { toggle : true };
+
+    this.handleClick = this.handleClick.bind(this);
+    //콜백에서 'this'가 작동하려면 위와 같이 바인딩을 해주어야 한다.
+  }
+
+
+  handleClick(e){
+    console.log("Toggle 현재값 : " + this.state.toggle);
+    this.setState({
+      toggle  : !this.state.toggle
+      //해당 상태에 반대값을 주입한다.
+    });
+
+  }
+
+  render(){
+    console.log("Toggle 바뀐값 : " + this.state.toggle);
+    return (
+      <button onClick={this.handleClick}>
+          {this.state.toggle === true ? "ON"  : "OFF"}
+      </button>
+      //클릭시 handleClick() 이벤트 발동 
+    )
+  }
+
+}
+// ------------------------------------------------------------------
+
+// ------------------------------------------------------------------
+
+function UserGreeting(){
+  return <h3>로그인 성공</h3>;
+}
+// 컴포넌트안에서 컴포넌트를 부를 수 없어 단일로 뺀서 함수화
+
+
+function GuestGreetind(){
+  return <h3>게스트</h3>;
+}
+// 컴포넌트안에서 컴포넌트를 부를 수 없어 단일로 뺀서 함수화
+
+class LoginControl extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {login : false};
+
+    //이벤트 바인딩 
+    this.LoginHandle = this.LoginHandle.bind(this);
+    this.LogoutHandle = this.LogoutHandle.bind(this);
+  }
+
+  Greenting(props){
+    const status = props.login;
+    if(status){
+      return <UserGreeting />;
+    }else{
+      return <GuestGreetind/>;
+    }
+  }
+  //받아온 로그인 상태에 따라 로그인성공,게스트를 표시 
+
+  LoginBTn(props){
+    return(
+      <button onClick={props.onClick}>
+        login
+      </button>
+    )
+  }
+  //로그인버튼 컴포넌트 클릭시 이벤트 함수 실행
+  
+  LogoutBTn(props){
+    return(
+      <button onClick={props.onClick}>
+        logout
+      </button>
+    )
+  }
+  //로그아웃버튼 컴포넌트 클릭시 이벤트 함수 실행
+
+  LoginHandle(){
+    this.setState({ login : true});
+  }
+  //로그인시 로그인상태 false상태로 변경
+  
+  LogoutHandle(){
+    this.setState({ login : false});
+  }
+  //로그아웃시 로그인 상태 true 변경
+  
+
+render() {
+  let button
+  
+  if(this.state.login){ 
+    button = <this.LogoutBTn onClick = {this.LogoutHandle}/>
+  }else{
+    button = <this.LoginBTn onClick = {this.LoginHandle}/>
+  }
+
+  return (
+    <div>
+      <this.Greenting login={this.state.login}/>
+      {button}
+    </div>
+  );
+}
+}
+// ------------------------------------------------------------------
+
+// ------------------------------------------------------------------
+class ShowHide extends React.Component{
+
+  constructor(props){
+    super(props);
+    this.state = {
+      showWarning : true
+    }
+    //바인딩
+    this.buttonToggleHandle = this.buttonToggleHandle.bind(this);
+
+  }
+
+  WariningBaner(props){
+    if(!props.status){
+      return null;
+    }
+//false 시 null,false를 주지 않으면 렌더링 하지 않게되어 아무것도 안나온다.
+
+    return (
+      <div className='warning'> 
+        Warning!
+      </div>
+    )
+  }
+
+  buttonToggleHandle(){
+    this.setState({
+      showWarning : !this.state.showWarning
+    });
+  }
+//클릭시 상태 바꾸기 Toggle
+
+  ButtonToggle(props){
+    let buttonText = "";
+
+    if(props.showWarning){
+      buttonText = "SHOW";
+    }else{
+      buttonText = "HIDE";
+    }
+
+    return(
+      <button onClick={props.toggle}>
+        {buttonText}
+      </button>
+    )
+  }
+  
+  render(){
+    return(
+      <div>
+        <this.WariningBaner status={this.state.showWarning} />
+        <this.ButtonToggle status={this.state.showWarning} toggle={this.buttonToggleHandle}/>
+      </div>
+    );
+  }
+}
+// ------------------------------------------------------------------
+
+// ------------------------------------------------------------------
+
+function NumberList(props){
+  const item = props.List;
+  const List = item.map((item , index) => 
+      <li key={item.toString()} data-index={index + 1}>{item}</li>
+  );
+
+  return (
+    <ul>{List}</ul>
+  )
+
+}
+
+const number = [ 1, 2, 3, 4, 5];
+// ------------------------------------------------------------------
+
+// ------------------------------------------------------------------
+class NameForm extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      value : '',
+      textAreaValue : '', 
+      selectValue : '',
+    };
+    
+    this.SubmitHandle = this.SubmitHandle.bind(this);
+    this.ChangeHandle = this.ChangeHandle.bind(this);
+  }
+
+  ChangeHandle(e){
+
+    const name = e.target.name;
+
+    this.setState({
+      [name] : e.target.value, 
+    })
+  }
+  //인풋에 입력값을 받으면 onChange가 동작하기 때문에 입력할 떄 값이 계속 업데이트 된다.
+  //제어 컴포넌트로 사용되면 input의 값은 항상 ReactState에 의해 결정된다. 코드를 조금 더 작성해야 한다는
+  //의미지만 다른 UI엘리먼트에 input의 값을 전달하거나 다른 이벤트 핸들러에서 갑을 재설정 할 수 있다.
+
+  SubmitHandle(event){
+    alert("this.state.value = "  + this.state.value);
+    event.preventDefault();
+  }
+
+  render(){
+    return(
+      <div>
+          <form onSubmit={this.SubmitHandle}>
+              <label>
+                <input type={"text"} name="value" value={this.state.value} onChange={this.ChangeHandle}></input>
+                <br />
+                <textarea value={this.state.textAreaValue} name="textAreaValue" onChange={this.ChangeHandle}></textarea>
+                <br />
+                <select value={this.state.selectValue} name="selectValue" onChange={this.ChangeHandle}>
+                    <option value="사과" >사과</option>
+                    <option value="오렌지">오렌지</option>
+                    <option value="딸기">딸기</option>
+                    <option value="자몽">자몽</option>
+                </select>
+             </label>
+              <input type={"submit"} value={"submit"}></input>
+          </form>
+      </div>
+    )
+  }
+
+}
+// ------------------------------------------------------------------
+
+
+
 root.render(
   <React.StrictMode>
     <h1>Hello, {formatName(name)}</h1>
@@ -227,6 +494,18 @@ root.render(
     author={comment.author} />
     {/* 컴포넌트 를 쪼개서 출력 */}
     <Clock />
+    {/* 뚝딱거리는 시계 자동화  */}
+    <Form />
+    {/* Submit 이벤트 동작 정지 */}
+    <Togle />
+    {/* 토글이벤트 바인딩 동작 */}
+    <LoginControl />
+    {/* 로그인 컨트롤 컨포넌트  */}
+    <ShowHide />
+    {/* 컴포넌트 렌더링 막기 */}
+    <NumberList List={number} />
+    {/* 배열의 리스트 함수 렌더링 */}
+    <NameForm />
   </React.StrictMode>
 );
 

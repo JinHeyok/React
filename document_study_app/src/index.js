@@ -490,8 +490,90 @@ class NameForm extends React.Component{
 }
 // ------------------------------------------------------------------
 
+// ------------------------------------------------------------------
+
+function FancyBorder(props){
+  return(
+    <div className={'FancyBorder FancyBorder-' + props.color}>
+      {props.children}
+      {/* 자식 엘레먼트를 그대로 가져온다. */}
+    </div>
+  )
+}
+
+function WelcomeDialog(){
+  return (
+    // <FancyBorder color="blue">
+    //   <h1 className='Dialog-title'>
+    //     Welcome
+    //   </h1>
+    //   <p className='Dialog-message'>
+    //    Thank you for visisting our spaceraft!
+    //   </p>
+    // </FancyBorder>
+    <Dialog 
+      title="Welcome"
+      message="Thank you for cisiting our spacecraft!" 
+    />
+    // 특수화로 변경 
+  )
+}
+//자식엘리먼트를 전달하기 위한 구문
 
 
+// -특수화
+function Dialog(props){
+  return (
+    <FancyBorder color="blue">
+      <h1 className='Dialog-title'>
+        {props.title}
+      </h1>
+      <p className='Dialog-meesage'>
+        {props.message}
+      </p>
+    {props.children}
+    {/* 자식 컴포넌트 출력 */}
+    </FancyBorder>
+  )
+}
+
+//합성
+class SignUpDialog extends React.Component{
+  constructor(props){
+    super(props);
+    this.hadnleChange = this.hadnleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    //바인딩
+    this.state  = { login : ""};
+  }
+
+  hadnleChange(e){
+    this.setState({login:e.target.value});
+  }
+
+  handleSubmit(){
+    alert("Welcome aboard " + this.state.login);
+  }
+
+  render(){
+    return(
+      <Dialog 
+        title = "Welcome"
+        message ="Thank you"
+      >
+      {/* 정의해서 전달 */}
+      <InputText type="text" onChange={this.hadnleChange}/>
+      <button onClick={this.handleSubmit}>Sign me up!</button>
+      {/* props.children으로 출력함 */}
+      </Dialog>
+    )
+  }
+
+}
+
+
+
+// ------------------------------------------------------------------
 root.render(
   <React.StrictMode>
     <h1>Hello, {formatName(name)}</h1>
@@ -532,6 +614,11 @@ root.render(
     <NumberList List={number} />
     {/* 배열의 리스트 함수 렌더링 */}
     <NameForm />
+    {/* form,input,select,textarea 폼태그 컴포넌트 */}
+    <WelcomeDialog />
+    {/* 컴포넌트에서 다른 컴포넌트 담기 */}
+    <SignUpDialog />
+    {/* 특수화 컴포넌트 */}
   </React.StrictMode>
 );
 

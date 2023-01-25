@@ -5,6 +5,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { render } from '@testing-library/react';
 import { warning } from '@remix-run/router';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Headers from './Header';
+import Main from './Main';
+import Product from './Product,';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const helloWorld = <h1>Hello World</h1>;
@@ -619,6 +623,17 @@ root.render(
     {/* 컴포넌트에서 다른 컴포넌트 담기 */}
     <SignUpDialog />
     {/* 특수화 컴포넌트 */}
+      <BrowserRouter>
+       {/*  브라우저 history API를 사용한 현재 위치의 URL을 저장해주는 역할 */}
+        <Headers /> 
+        <Routes>
+          {/* 자식 Route들을 구성하고 있는 단위이다*/}
+          <Route path='/' element={<Main />}></Route> 
+          {/* path를 통해 URL을 분기시킬 수 있다. 중첩해서 사용가능  */}
+          {/* 페이지를 갱신하지 않고 렌더링 방식으로 이동하려면 Link 컴포넌트를 사용하면 된다.*/}
+          <Route path='/product/:productid' element={<Product />}></Route>
+        </Routes>
+      </BrowserRouter>
   </React.StrictMode>
 );
 

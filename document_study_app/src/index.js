@@ -9,6 +9,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Headers from './Header';
 import Main from './Main';
 import Product from './Product,';
+import Test from './component/Test';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const helloWorld = <h1>Hello World</h1>;
@@ -631,7 +632,12 @@ root.render(
           <Route path='/' element={<Main />}></Route> 
           {/* path를 통해 URL을 분기시킬 수 있다. 중첩해서 사용가능  */}
           {/* 페이지를 갱신하지 않고 렌더링 방식으로 이동하려면 Link 컴포넌트를 사용하면 된다.*/}
+          {/* element는 보여질 페이지 클래스 및 함수  */}
           <Route path='/product/:productid' element={<Product />}></Route>
+          <Route path='/component/:testid' element={<Test/>}></Route>
+          <Route path='/component/:testid/*' element={<Test/>}></Route>
+          {/* /: 파라미터 값 Link태그에서 파라미터값을 지정해야 함 */}
+          {/* 파라미터 아이디 동일하게 넘어간다. */}
         </Routes>
       </BrowserRouter>
   </React.StrictMode>

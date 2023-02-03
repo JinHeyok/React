@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 
 const Logout = () => {
     const logotTitle = "로그아웃 화면입니다.";
+    sessionStorage.clear();
     return(
         <>
             <h4>{logotTitle}</h4>

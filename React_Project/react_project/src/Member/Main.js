@@ -28,30 +28,10 @@ function UserList() {
     
 export default function Main(){
 
-        const list = UserList();
 
         return(
         <>
-        <h4>메인화면입니다.</h4>
-        <Link to="/login"><h5>로그인</h5></Link>
-        <Link to="/store"><h5>상품페이지</h5></Link>
-        <table>
-                    <tr>
-                        <th>인덱스</th>
-                        <th>아이디</th>
-                        <th>비밀번호</th>
-                    </tr>
-        {list.map((item) => {
-            return(
-                    <tr>
-                        <td>{item.su_index}</td>
-                        <td>{item.su_id}</td>
-                        <td>{item.su_pw}</td>
-                    </tr>
-
-            )
-        })}
-        </table>
+            <p>메인화면입니다.</p>
         </>
         ); 
  }

@@ -3,7 +3,6 @@ import React from "react";
 
 export class Tag extends React.Component{
     constructor(props){
-        console.log(props.type);
         super(props);
         this.state = {
             tagType : props.tagType,
